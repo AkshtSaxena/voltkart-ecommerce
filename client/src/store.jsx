@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const Store = createContext();
+const API_BASE_URL = import.meta.env.DEV ? "" : "https://voltkart-ecommerce.onrender.com";
 export const useStore = () => useContext(Store);
 
 const load = (key, fallback) => {
@@ -29,7 +30,7 @@ export function StoreProvider({ children }) {
 
   // Use one helper for API calls and attach the session token automatically.
   const api = async (path, options = {}) => {
-    const res = await fetch(`/api${path}`, {
+    const res = await fetch(`${API_BASE_URL}/api${path}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",

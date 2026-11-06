@@ -51,3 +51,10 @@ Password recovery is intended for local development: the backend prints a reset 
 
 - Client: `npm run dev` starts the development server, `npm run build` creates a production build, `npm run preview` previews that build, and `npm run lint` runs ESLint.
 - Server: `npm run dev` starts the API with automatic restarts; `npm start` starts it without watch mode.
+
+## Deploy the frontend to Netlify
+
+1. Import `AkshtSaxena/voltkart-ecommerce` from GitHub in Netlify.
+2. Set the base directory to `client`, the build command to `npm run build`, and the publish directory to `dist`.
+3. Deploy the site. In production, the client uses the public Render API URL in its source code; no API secret or frontend environment variable is required. The `_redirects` file configures SPA route fallback.
+4. Copy the generated Netlify site origin into the Render API service's `FRONTEND_URL` setting, replacing `*` with the exact origin, then redeploy the API.

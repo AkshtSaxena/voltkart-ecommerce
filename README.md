@@ -27,7 +27,7 @@ VoltKart is a full-stack electronics storefront built as a demonstration of a mo
 ## Getting started
 
 1. Install the dependencies separately in the `server` and `client` directories using npm.
-2. Copy `server/.env.example` to `server/.env`, then set `PORT` to the desired API port (the default is 5000), `MONGO_URI` to your MongoDB connection string, and `JWT_SECRET` to a strong, unique secret. The real `.env` file is excluded from Git.
+2. Copy `server/.env.example` to `server/.env`, then set `PORT` to the desired API port (the default is 5000), `FRONTEND_URL` to the frontend origin, `MONGO_URI` to your MongoDB connection string, and `JWT_SECRET` to a strong, unique secret. For multiple frontend origins, separate them with commas. The real `.env` file is excluded from Git.
 3. Start the backend from the `server` directory with `npm run dev`. The API connects to MongoDB before it starts listening.
 4. In a separate terminal, start the frontend from the `client` directory with `npm run dev`.
 5. Open `http://localhost:5173` in a browser. The Vite development server forwards API requests to the backend on port 5000.

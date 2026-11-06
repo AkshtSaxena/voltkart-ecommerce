@@ -7,7 +7,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
+const frontendOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+
+app.use(cors({ origin: frontendOrigins }));
 app.use(express.json());
 
 // ---------- Models ----------
@@ -189,8 +194,9 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     user.resetTokenHash = hashToken(token); // Store only the token hash.
     user.resetTokenExpires = new Date(Date.now() + 15 * 60 * 1000);
     await user.save();
-    console.log("Password reset link:", `http://localhost:5173/reset-password/${token}`);
-    if (process.env.NODE_ENV !== "production") out.devResetLink = `/reset-password/${token}`;
+    const resetUrl = `${frontendOrigins[0] || "http://localhost:5173"}/reset-password/${token}`;
+    console.log("Password reset link:", resetUrl);
+    if (process.env.NODE_ENV !== "production") out.devResetLink = resetUrl;
   }
   res.json(out);
 });

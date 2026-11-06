@@ -7,12 +7,14 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const app = express();
-const frontendOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+const allowAllOrigins = frontendUrl.trim() === "*";
+const frontendOrigins = allowAllOrigins ? [] : frontendUrl
   .split(",")
   .map((origin) => origin.trim().replace(/\/+$/, ""))
   .filter(Boolean);
 
-app.use(cors({ origin: frontendOrigins }));
+app.use(allowAllOrigins ? cors() : cors({ origin: frontendOrigins }));
 app.use(express.json());
 
 // ---------- Models ----------
